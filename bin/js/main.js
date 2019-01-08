@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: "/Practise/demo2DLaya/\Orchard",
+    baseUrl: "/Practise/demo2DLaya/Orchard",
     // paths: {
     //     jquery: '../jquery-1.10.2'
     // }

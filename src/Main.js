@@ -1,9 +1,11 @@
 import GameConfig from "./GameConfig";
-import LocalConfig from "./LocalConfig";
-import GameStart from "./GameStart";
+import UIConfig from "./Config/UIConfig";
+import UIManager from "./Manager/UIManager";
+import GameStartController from "./UI/GameStartController";
 
 class Main {
 	constructor() {
+		fairygui.UIConfig.packageFileExtension = "json";
 		//根据IDE设置初始化引擎		
 		if (window["Laya3D"]) Laya3D.init(GameConfig.width, GameConfig.height);
 		else Laya.init(GameConfig.width, GameConfig.height, Laya["WebGL"]);
@@ -30,9 +32,11 @@ class Main {
 		//激活大小图映射，加载小图的时候，如果发现小图在大图合集里面，则优先加载大图合集，而不是小图
 		Laya.AtlasInfoManager.enable("fileconfig.json");
 
-		Laya.loader.load([{ url: LocalConfig.FuiImageUrl, type: laya.net.Loader.IMAGE },
-            { url: LocalConfig.FuiBufferUrl, type: laya.net.Loader.BUFFER }
-        ], laya.utils.Handler.create(this, this.onConfigLoaded));
+		let viewName = UIConfig.ViewName
+		Laya.loader.load([{ url: viewName.OrchardMainUI.FuiImageUrl, type: laya.net.Loader.IMAGE },
+            { url: viewName.OrchardMainUI.FuiBufferUrl, type: laya.net.Loader.BUFFER }
+		], laya.utils.Handler.create(this, this.onConfigLoaded));
+		// Laya.URL.basePath = "http://192.168.1.64:8080/Orchard/";
 	}
 
 	onConfigLoaded() {
@@ -42,14 +46,9 @@ class Main {
         Laya.stage.addChild(fairygui.GRoot.inst.displayObject);
         
         fairygui.UIPackage.addPackage("res/Orchard");
-        // fairygui.UIConfig.defaultFont = "宋体";
-        // fairygui.UIConfig.verticalScrollBar = "ui://Basic/ScrollBar_VT";
-        // fairygui.UIConfig.horizontalScrollBar = "ui://Basic/ScrollBar_HZ";
-        // fairygui.UIConfig.popupMenu = "ui://Basic/PopupMenu";
-        // fairygui.UIConfig.buttonSound = "ui://Basic/click";
 
-        this.gameStart = new GameStart();
-        this.gameStart.addView();
+		UIManager.openController(GameStartController);
+		// UIManager.openController(new GameStartController());
 	}
 }
 //激活启动类

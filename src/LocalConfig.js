@@ -1,7 +1,9 @@
 var LocalConfig = {}
 
-LocalConfig.FuiImageUrl = "res/Orchard_atlas0.png";
-LocalConfig.FuiBufferUrl = "res/Orchard.fui";
+LocalConfig.OrchardMainUI = {
+    FuiImageUrl: "res/Orchard_atlas0.png",
+    FuiBufferUrl: "res/Orchard.fui",
+}
 
 LocalConfig.Seedling = {
     Name:"香橙树",
@@ -17,5 +19,7 @@ LocalConfig.GetDrops = function(){
 LocalConfig.SaveDrops = function(_value){
     Laya.LocalStorage.setJSON("Drops", _value)
 }
+
+LocalConfig.Gamestart = "./GameStart";
 
 export default LocalConfig;
